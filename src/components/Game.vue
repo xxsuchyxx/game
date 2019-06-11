@@ -1,7 +1,7 @@
 <template>
   <div class="gameContainer">
     <canvas id="canvas" width="728" height="512"></canvas>
-    <div>score: {{ score }}</div>
+    <!-- <div>this.score: {{ this.score }}</div> -->
     <button v-on:click="addScore">Add Score</button>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.score);
+    console.log(this.this.score);
     const cvs = document.getElementById("canvas");
     const ctx = cvs.getContext("2d");
     const submarine = new Image();
@@ -48,7 +48,7 @@ export default {
     reward.src = rewardImg;
     enemyRock.src = enemyImg;
 
- 
+
 // poczatkowe wartosci
 
 const gap = this.gap;
@@ -56,7 +56,9 @@ let constant;
 let posX = 10;
 let posY = 150;
 const gravity = 0.5;
-let score = 0;
+let moveY = 0;
+let moveX = 0;
+// let this.score = 0;
 
 // dzwieki
 const move = new Audio();
@@ -89,20 +91,22 @@ document.addEventListener("keydown",(e)=>{
  });
 
 function moveUp(){
-    posY -= 25;
+    
     move.play();
+    moveY -= 0.15;
 }
 function moveDown(){
-    posY += 25;
+ 
     move.play();
+    moveY += 0.15;
 }
 function moveRight(){
-    posX += 25;
-    move.play();
+   move.play();
+    moveX += 0.15;
 }
 function moveLeft(){
-    posX -= 25;
-    move.play();
+ move.play();
+    moveX -= 0.15;
 }
 
 
@@ -160,7 +164,7 @@ function draw(){
          }
         
         if(rock[i].x == 5){
-            score++;
+            this.score++;
             scor.play();
         }        
     }
@@ -190,7 +194,7 @@ function draw(){
             console.log();
             diamond[i].y -= 511;
             scor.play();
-            score+=5;
+            this.score+=5;
            
   
          }  
@@ -224,8 +228,8 @@ function draw(){
             console.log();
             enemy[i].y -= 511;
             scor.play();
-            score-=15;
-            if (score < 0){
+            this.score-=15;
+            if (this.score < 0){
               location.reload(); 
             }
           
@@ -237,26 +241,26 @@ function draw(){
     ctx.drawImage(submarine,posX,posY);
    
     
-    posY += gravity;
+    posY += moveY;
+    posX += moveX;
 
     
-    ctx.fillStyle = "#000";
-    ctx.font = "20px Verdana";
-    ctx.fillText("Score : "+score,10,cvs.height-20);
+    ctx.fillStyle = "#e9e100";
+    ctx.font = "bold 20px Verdana";
+    ctx.fillText("Score : "+this.score,10,cvs.height-20);
     requestAnimationFrame(draw);
- 
-     
 }
 
 draw();
-
-    
   }
 };
 </script>
 <style lang="scss">
   #canvas{
     border: 1px solid black;
+ 
+        transition: width .5s, height .5s, top .5s, left .5s;
+ 
   }
   body {
     max-height: 100vh;
