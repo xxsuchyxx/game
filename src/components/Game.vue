@@ -1,7 +1,7 @@
 <template>
   <div class="gameContainer">
     <canvas id="canvas" width="728" height="512"></canvas>
-    <!-- <div>this.score: {{ this.score }}</div> -->
+    <!-- <div>score: {{ score }}</div> -->
     <button v-on:click="addScore">Add Score</button>
   </div>
 </template>
@@ -26,11 +26,11 @@ export default {
   },
   methods:{
     addScore:function(){
-      this.score += 5;
+      score += 5;
     }
   },
   mounted() {
-    console.log(this.this.score);
+    console.log(this.score);
     const cvs = document.getElementById("canvas");
     const ctx = cvs.getContext("2d");
     const submarine = new Image();
@@ -58,7 +58,7 @@ let posY = 150;
 const gravity = 0.5;
 let moveY = 0;
 let moveX = 0;
-// let this.score = 0;
+let score = 0;
 
 // dzwieki
 const move = new Audio();
@@ -164,7 +164,7 @@ function draw(){
          }
         
         if(rock[i].x == 5){
-            this.score++;
+            score++;
             scor.play();
         }        
     }
@@ -194,7 +194,7 @@ function draw(){
             console.log();
             diamond[i].y -= 511;
             scor.play();
-            this.score+=5;
+            score+=5;
            
   
          }  
@@ -228,8 +228,8 @@ function draw(){
             console.log();
             enemy[i].y -= 511;
             scor.play();
-            this.score-=15;
-            if (this.score < 0){
+            score-=15;
+            if (score < 0){
               location.reload(); 
             }
           
@@ -247,7 +247,7 @@ function draw(){
     
     ctx.fillStyle = "#e9e100";
     ctx.font = "bold 20px Verdana";
-    ctx.fillText("Score : "+this.score,10,cvs.height-20);
+    ctx.fillText("Score : "+score,10,cvs.height-20);
     requestAnimationFrame(draw);
 }
 
